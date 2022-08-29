@@ -5,6 +5,16 @@
 { config, pkgs, ... }:
 
 {
+  ####### ====================================
+  ###                 VM ONLY
+  ####### ====================================
+
+  virtualisation.virtualbox.guest.enable = true;
+
+  ####### ====================================
+  ###                 system
+  ####### ====================================
+
   system.stateVersion = "22.05"; # Did you read the comment?
 
   imports =
@@ -53,8 +63,6 @@
   ###                 system
   ####### ====================================
 
-  virtualisation.virtualbox.guest.enable = true;
-
   services.printing.enable = true;
 
   sound.enable = true;
@@ -94,4 +102,22 @@
   ## These things are daemonized by default
 
   # services.openssh.enable = true;
+
+  ####### ====================================
+  ###                 Garbage Collection
+  ####### ====================================
+  ## not nessecary, but also totally nessecary
+  ## This deletes old config instances and old application versions
+  ## To allow yourself to rollback to arbitrary versions 
+  ## all previous versions are saved by default
+  ## This will gradually fill your harddrive
+
+  nix = {
+    settings.auto-optimise-store = true;
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
+    };
+  };
 }

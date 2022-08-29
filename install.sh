@@ -1,11 +1,9 @@
 #!/bin/sh
 
 echo "Run as sudo"
-
-mkdir bak | true
-mv /etc/nixos/* ./bak
-
-chown `logname`: ./bak
+bakdir="bak-$(date +%s)"
+mkdir "/tmp/$bakdir" | true
+mv /etc/nixos/* "/tmp/$bakdir"
 
 ln -s "$PWD/nixos-only/"* /etc/nixos/
 
