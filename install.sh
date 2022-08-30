@@ -5,5 +5,5 @@ bakdir="bak-$(date +%s)"
 mkdir "/tmp/$bakdir" | true
 mv /etc/nixos/* "/tmp/$bakdir"
 
-ln -s "$PWD/home-manager/"* /etc/nixos/
+ln -s "$PWD/flake-time/"* /etc/nixos/
 
