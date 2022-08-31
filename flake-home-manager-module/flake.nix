@@ -2,9 +2,9 @@
   description = "A very basic flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-22.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
-      url = github:nix-community/home-manager/archive/release-22.05.tar.gz;
+      url = github:nix-community/home-manager/archive/master.tar.gz;
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
