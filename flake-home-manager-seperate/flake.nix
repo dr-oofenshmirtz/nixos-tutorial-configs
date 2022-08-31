@@ -6,7 +6,7 @@
     home-manager = {
       url = github:nix-community/home-manager;
       inputs.nixpkgs.follows = "nixpkgs";
-    };
+    }
   };
 
   outputs = { self, nixpkgs, home-manager }: # notice no curly brackets here because we use vars
@@ -23,17 +23,21 @@
       nixosConfigurations = {
         yolo = lib.nixosSystem {
           inherit system;
-          modules = [
-            ./configuration.nix
-            home-manager.nixosModules.home-manager = {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.yolo = {
-                imports = [ ./home.nix ];
-              };
-            };
-          ];
+          modules = [ ./configuration.nix ];
         };
       };
+      hmConfig = {
+        yolo = home-manager.lib.homeManagerConfiguration {
+          inherit system pkgs;
+          #stateVersion = "some version string" # optional
+          username = "yolo";
+          homeDirectory = "/home/yolo";
+          configuration = {
+            imports = [
+              ./home.nix
+            ]
+          }
+        }
+      }
     };
   }
