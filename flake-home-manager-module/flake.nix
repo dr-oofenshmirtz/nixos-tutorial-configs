@@ -31,7 +31,7 @@
               home-manager.users.yolo = {
                 imports = [ ./home.nix ];
               };
-            }
+            };
           ];
         };
       };
