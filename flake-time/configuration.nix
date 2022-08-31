@@ -21,7 +21,7 @@ in
 
   imports =
     [ # Include the results of the hardware scan.
-      <home-manager/nixos>
+      #<home-manager/nixos>
       ./hardware-configuration.nix
     ];
 
@@ -128,15 +128,15 @@ in
   ####### ====================================
   ## will not work with flakes
   ## Flakes will also not need the home manager channel
-  home-manager.users.${username} = { pkgs, ... }: {
+  #home-manager.users.${username} = { pkgs, ... }: {
     # home manager stuff here
     # home.packages = [ pkgs.htop ]; These two things are the same
-    home.packages = with pkgs; [ htop ];
-  };
+    #home.packages = with pkgs; [ htop ];
+  #};
 
   
   ####### ====================================
-  ###                 Home Manager
+  ###                 flakes
   ####### ====================================
 
   nix = {

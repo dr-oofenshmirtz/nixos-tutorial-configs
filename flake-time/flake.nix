@@ -12,7 +12,7 @@
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;  # allows non-foss 
-      }
+      };
       lib = nixpkgs.lib;
       #hostname = "yolo"
     in {
