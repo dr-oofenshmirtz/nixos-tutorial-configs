@@ -6,7 +6,9 @@
     stateVersion = "22.05";
     username = "${user}";
     homeDirectory = "/home/${user}";
-    systemPackages = with pkgs; [
+    packages = with pkgs; [
+      firefox
+
       feh
       mpv
       vlc   
@@ -15,9 +17,9 @@
   
   programs = {
     home-manager.enable = true;
-  }
+  };
 
   xsession = {
     enable = true;
-  }
+  };
 }

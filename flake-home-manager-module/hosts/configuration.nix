@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, user, ... }:
+{ config, pkgs, user, inputs, ... }:
 {
   virtualisation.virtualbox.guest.enable = true;
 
@@ -67,17 +67,23 @@
       VISUAL = "nvim";
     };
     systemPackages = with pkgs; [
+      spice-vdagent #For Paste into gnome VM
+
+
       git
       vim
-      nvim
+      neovim
       kitty
       xterm
       usbutils
       pciutils
       killall
     ];
-  }
+  };
 
+  services = {
+    spice-vdagentd.enable  = true;
+  };
   services.openssh.enable = true;
 
   nix = {
