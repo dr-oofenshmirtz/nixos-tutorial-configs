@@ -1,39 +1,31 @@
 {
-  description = "A very basic flake";
-
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager = {
-      url = github:nix-community/home-manager;
-      inputs.nixpkgs.follows = "nixpkgs";
+  description = "home manager + flake config";
+  inputs = 
+    {
+      nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+      home-manager = {
+        url = github:nix-community/home-manager;
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
     };
-  };
-
-  outputs = { self, nixpkgs, home-manager }: # notice no curly brackets here because we use vars
+  
+  outputs = inputs @ { self, nixpkgs, home-manager, ... }:
     let
-      system = "x86_64-linux"; # this isn't strictly nessecary,
-      # but it would be a pain not to
+      system = "x86_64-linux"; 
+      user = "yolo";
+
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;  # allows non-foss 
       };
       lib = nixpkgs.lib;
-      hostname = "yolo";
-    in {
-      nixosConfigurations = {
-        ${hostname} = lib.nixosSystem {
-          inherit system;
-          modules = [
-            ./configuration.nix
-            home-manager.nixosModules.home-manager {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.${hostname} = {
-                imports = [ ./home.nix ];
-              };
-            }
-          ];
-        };
-      };
+    in
+    {
+      nixosConfigurations = (
+        import ./hosts {
+          inherit (nixpkgs) lib;
+          inherit inputs user system home-manager;
+        }
+      );
     };
-  }
+}
